@@ -1,0 +1,4 @@
+  espaces au début et à la fin  
+	ligne précédée d'une tabulation	
+ 	  
+texte	avec	des	tabulations
