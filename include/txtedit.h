@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <termios.h>
+#include <stdlib.h>
 
 typedef struct s_file{
 

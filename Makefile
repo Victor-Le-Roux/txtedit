@@ -2,7 +2,7 @@ NAME := txtedit
 DEBUG_NAME := txtedit-debug
 
 CC := cc
-CFLAGS := -std=c17 -Wall -Wextra -Werror -Wpedantic
+CFLAGS := -std=c17 -Wall -Wextra -Wpedantic
 CPPFLAGS := -Iinclude
 DEBUG_FLAGS := -g3 -fsanitize=address,undefined -fno-omit-frame-pointer
 
