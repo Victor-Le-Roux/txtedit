@@ -6,8 +6,10 @@ CFLAGS := -std=c17 -Wall -Wextra -Wpedantic
 CPPFLAGS := -Iinclude
 DEBUG_FLAGS := -g3 -fsanitize=address,undefined -fno-omit-frame-pointer
 
-SRC := $(wildcard src/*.c)
-HEADERS := $(wildcard include/*.h)
+rwildcard = $(foreach entry,$(wildcard $1*),$(call rwildcard,$(entry)/,$2)$(filter $(subst *,%,$2),$(entry)))
+
+SRC := $(call rwildcard,src/,*.c)
+HEADERS := $(call rwildcard,include/,*.h)
 
 OBJ_DIR := build
 OBJ := $(SRC:src/%.c=$(OBJ_DIR)/%.o)
@@ -21,7 +23,7 @@ $(NAME): $(OBJ) | check-sources
 	$(CC) $(OBJ) $(LDFLAGS) $(LDLIBS) -o $@
 
 $(OBJ_DIR)/%.o: src/%.c Makefile
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(@D)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -MMD -MP -c $< -o $@
 
 debug: $(DEBUG_NAME)
@@ -39,7 +41,7 @@ test: debug
 
 check-sources:
 	@if [ -z "$(SRC)" ]; then \
-		echo "Error: no C source file found in src/."; \
+		echo "Error: no C source file found in src/ or its subdirectories."; \
 		exit 1; \
 	fi
 
