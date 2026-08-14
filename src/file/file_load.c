@@ -1,5 +1,6 @@
 #include "file.h"
 
+#include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -92,7 +93,11 @@ int	file_load(t_file *file, int fd)
 	builder.capacity = 0;
 	while (1)
 	{
-		bytes = read(fd, buffer, sizeof(buffer));
+		do
+		{
+			bytes = read(fd, buffer, sizeof(buffer));
+		}
+		while (bytes < 0 && errno == EINTR);
 		if (bytes < 0)
 			return (load_error(file, &builder));
 		if (bytes == 0)
