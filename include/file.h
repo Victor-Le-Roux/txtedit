@@ -31,4 +31,5 @@ void	file_destroy(t_file *file);
 /* loading */
 int		file_load(t_file *file, int fd);
 
+int	file_save(const t_file *file, int fd);
 #endif
