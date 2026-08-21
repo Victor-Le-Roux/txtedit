@@ -32,12 +32,12 @@ $(DEBUG_NAME): $(SRC) $(HEADERS) Makefile | check-sources
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(DEBUG_FLAGS) $(SRC) \
 		$(LDFLAGS) $(LDLIBS) -o $@
 
-test: debug
+test:
 	@if [ ! -x tests/run_tests.sh ]; then \
 		echo "Error: tests/run_tests.sh is missing or not executable."; \
 		exit 1; \
 	fi
-	./tests/run_tests.sh ./$(DEBUG_NAME)
+	./tests/run_tests.sh
 
 check-sources:
 	@if [ -z "$(SRC)" ]; then \

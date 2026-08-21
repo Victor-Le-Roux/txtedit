@@ -45,7 +45,11 @@ static int	builder_push_line(t_file *file, t_builder *builder)
 	line = line_create(builder->data, builder->len);
 	if (line == NULL)
 		return (-1);
-	file_append_line(file, line);
+	if (file_append_line(file, line) < 0)
+	{
+		line_destroy(line);
+		return (-1);
+	}
 	builder->len = 0;
 	return (0);
 }
@@ -88,6 +92,8 @@ int	file_load(t_file *file, int fd)
 	t_builder	builder;
 	ssize_t		bytes;
 
+	if (file == NULL || fd < 0)
+		return (-1);
 	builder.data = NULL;
 	builder.len = 0;
 	builder.capacity = 0;
